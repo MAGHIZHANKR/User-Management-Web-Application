@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User Record | System Portal</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style sheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="top-accent-bar orange"></div>
+
+    <div class="container animate-faded-in" style="max-width: 600px; margin-top: 60px;">
+        
+        <!-- Header -->
+        <header class="app-header justify-center text-center">
+            <div class="brand flex-column" style="text-align: center;">
+                <div class="logo-box orange" style="margin: 0 auto 12px auto;">
+                    <i class="fa-solid fa-user-pen"></i>
+                </div>
+                <h2>Edit User Details</h2>
+                <p class="subtitle" style="text-align: center;">Update record settings inside SQLite for: <strong>{{ user['name'] }}</strong></p>
+            </div>
+        </header>
+
+        <!-- Flash messages inside edit layout -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for category, msg in messages %}
+                        <div class="alert {{ category }}">
+                            <div class="alert-content">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span>{{ msg }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Card Form -->
+        <div class="card shadow-lg" style="margin-top: 20px;">
+            <form action="{{ url_for('edit_user', user_id=user['id']) }}" method="POST" class="user-form">
+                
+                <!-- ID Display -->
+                <div class="form-group">
+                    <label class="readonly-label">User Reference ID</label>
+                    <input type="text" value="System Database Entry #{{ user['id'] }}" disabled class="disabled-input">
+                </div>
+
+                <!-- Full Name input -->
+                <div class="form-group">
+                    <label for="name">
+                        <i class="fa-regular fa-user"></i> Full Name <span class="required">*</span>
+                    </label>
+                    <input type="text" id="name" name="name" value="{{ user['name'] }}" required placeholder="John Doe">
+                    <span class="input-hint">First and last name</span>
+                </div>
+
+                <!-- Email input -->
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fa-regular fa-envelope"></i> Email Address <span class="required">*</span>
+                    </label>
+                    <input type="email" id="email" name="email" value="{{ user['email'] }}" required placeholder="john@example.com">
+                    <span class="input-hint">Must be a valid and unique email</span>
+                </div>
+
+                <!-- Phone Number input -->
+                <div class="form-group">
+                    <label for="phone">
+                        <i class="fa-solid fa-phone"></i> Phone Number <span class="required">*</span>
+                    </label>
+                    <input type="tel" id="phone" name="phone" value="{{ user['phone'] }}" required placeholder="123-456-7890">
+                    <span class="input-hint">Mobile contact cell or home phone</span>
+                </div>
+
+                <!-- City input -->
+                <div class="form-group">
+                    <label for="city">
+                        <i class="fa-regular fa-building"></i> City Location <span class="required">*</span>
+                    </label>
+                    <input type="text" id="city" name="city" value="{{ user['city'] }}" required placeholder="New York">
+                    <span class="input-hint">Primary place of residence</span>
+                </div>
+
+                <!-- Footer Buttons -->
+                <div class="button-row" style="margin-top: 30px; display: flex; gap: 12px;">
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary flex-1 text-center" style="justify-content: center;">
+                        <i class="fa-solid fa-arrow-left"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-orange flex-1">
+                        <i class="fa-solid fa-circle-check"></i> Update Record
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <p class="text-center" style="margin-top: 24px; font-size: 0.8rem; color: #64748b;">
+            Secure session state handled via flask secret keys.
+        </p>
+    </div>
+
+</body>
+</html>

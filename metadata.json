@@ -1,0 +1,6 @@
+{
+  "name": "User Management Web Application",
+  "description": "An end-to-end full stack web application demonstrating frontend, backend, and SQLite database synchronization. Complete with a live full-stack design and ready-to-use Python Flask backend files.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
